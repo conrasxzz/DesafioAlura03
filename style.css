@@ -1,0 +1,276 @@
+/* ==========================================================================
+   1. VARIÁVEIS E RESET GLOBAL
+   Centralizamos as cores e fontes para facilitar futuras alterações visuais.
+   ========================================================================== */
+:root {
+  --primary-color: #4f46e5;       /* Azul/Índigo moderno */
+  --primary-hover: #4338ca;
+  --bg-color: #f3f4f6;            /* Fundo cinza suave */
+  --card-bg: #ffffff;             /* Fundo branco do cartão */
+  --text-main: #1f2937;           /* Texto escuro principal */
+  --text-muted: #6b7280;          /* Texto secundário/cinza */
+  --border-color: #e5e7eb;        /* Linhas e bordas suaves */
+  --danger-color: #ef4444;        /* Vermelho para exclusão */
+  --danger-hover: #dc2626;
+  --success-color: #10b981;       /* Verde para tarefas concluídas */
+  --radius: 12px;                 /* Arredondamento padrão */
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 16px;
+}
+
+/* ==========================================================================
+   2. ESTRUTURA PRINCIPAL (CARTÃO)
+   ========================================================================== */
+.app-container {
+  background-color: var(--card-bg);
+  width: 100%;
+  max-width: 520px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 24px;
+}
+
+.app-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.app-header .subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   3. FORMULÁRIO DE ENTRADA
+   ========================================================================== */
+.task-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.task-form input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-form input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.task-form button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.task-form button:hover {
+  background-color: var(--primary-hover);
+}
+
+.task-form button:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   4. CONTROLES E FILTROS
+   ========================================================================== */
+.task-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: #f1f5f9;
+  color: var(--text-main);
+}
+
+.filter-btn.active {
+  background-color: #e0e7ff;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   5. LISTA DE TAREFAS
+   ========================================================================== */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-color); /* Borda azul para indicar tarefa pendente */
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.task-item:hover {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.task-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Estilo do checkbox */
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.task-text {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  word-break: break-word;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* Badges (etiquetas) que identificam o status visual da tarefa */
+.status-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.badge-pending {
+  background-color: #e0e7ff;
+  color: var(--primary-color);
+}
+
+.badge-completed {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA TAREFA CONCLUÍDA
+   ========================================================================== */
+.task-item.completed {
+  background-color: #f0fdf4;                 /* Fundo verde suave */
+  border-color: #bbf7d0;                    /* Borda verde clara */
+  border-left: 4px solid var(--success-color); /* Borda lateral verde indicando conclusão */
+  opacity: 0.9;
+}
+
+.task-item.completed:hover {
+  background-color: #ecfdf5;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #4b5563;
+  font-style: italic;
+}
+
+.task-item.completed .task-checkbox {
+  accent-color: var(--success-color);
+}
+
+/* Botão de excluir tarefa */
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #fee2e2;
+  color: var(--danger-color);
+}
+
+/* ==========================================================================
+   6. MENSAGEM DE LISTA VAZIA
+   ========================================================================== */
+.empty-state {
+  display: none;
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.empty-state.visible {
+  display: block;
+}
